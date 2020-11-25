@@ -1,65 +1,70 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Row, Col } from "react-bootstrap";
+import PageLayout from "components/PageLayout";
+import AuthorIntro from "components/AuthorIntro";
+import CardItem from "components/CardItem";
+import CardListItem from "components/CardListItem";
 
-export default function Home() {
+import { getAllBlogs } from "lib/api";
+
+export default function Home({ blogs }) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    <PageLayout>
+      <AuthorIntro />
+      <hr />
+      {/* {JSON.stringify(blogs)} */}
+      <Row className="mb-5">
+        {/* <Col md="10">
+          <CardListItem />
+        </Col> */}
+        {blogs.map((blog) => (
+          <Col key={blog.slug} md="4">
+            <CardItem
+              author={blog.author}
+              title={blog.title}
+              subtitle={blog.subtitle}
+              date={blog.date}
+              image={blog.coverImage}
+              slug={blog.slug}
+              link={{
+                href: "blogs/[slug]",
+                as: `/blogs/${blog.slug}`,
+              }}
+            />
+          </Col>
+        ))}
+      </Row>
+    </PageLayout>
+  );
 }
+
+// This function is called during the build (build time)
+// Provides props to your page
+// It will create static page
+export async function getStaticProps() {
+  const blogs = await getAllBlogs();
+  return {
+    props: {
+      blogs,
+    },
+  };
+}
+
+// export async function getServerSideProps() {
+//   const randomNumber = Math.random();
+//   const blogs = await getAllBlogs();
+//   return {
+//     props: {
+//       blogs,
+//       randomNumber,
+//     },
+//   };
+// }
+
+//Static Page
+//Faster,can be cached using CDN
+//Created at build time
+//When we making the request we are always receiving the some html document
+
+//Dynamic Page
+//Created at request time (we can fetch data on server)
+//Little bit slower, the time depends on data you are fetching
