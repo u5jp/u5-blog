@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
   font-family: Nunito, sans-serif;
   font-style: normal;
@@ -20,11 +21,13 @@ html, body {
 }
 
 .page-wrapper {
-  padding-top: 20px;;
+  padding-top: 20px;
+  ;
 }
 
 
 .card.fj-card {
+
   // padding-top: 50px;
   .card-body-wrapper {
     background-color: #fff;
@@ -35,6 +38,10 @@ html, body {
     z-index: 2;
     padding: 20px;
     padding-bottom: 40px;
+
+    &.no-image {
+      min-height: auto;
+    }
   }
 
   .card-body {
@@ -57,6 +64,7 @@ html, body {
   .card-header {
     background-color: transparent;
     padding: 0px 0px 15px;
+
     img {
       --size: 45px;
       background-color: #fff;
@@ -67,7 +75,8 @@ html, body {
       // position: absolute;
       top: calc(-1 * (var(--size) / 2));
       width: var(--size);
-      height: var(--size);;
+      height: var(--size);
+      ;
     }
   }
 
@@ -79,7 +88,9 @@ html, body {
     font-weight: bold;
     font-size: 14px;
     letter-spacing: .15rem;
-    padding-top: 1.5rem !important /* @TODO temp !!!*/;
+    padding-top: 1.5rem !important
+      /* @TODO temp !!!*/
+    ;
     padding: .75rem 1.5rem;
     background-color: hsl(210, 5%, 41%);
     border-color: hsl(210, 5%, 36%);
@@ -118,13 +129,16 @@ html, body {
 
 .card.fj-card.placeholder {
   color: transparent;
+
   .image-placeholder {
     height: 200px;
     width: 100%;
     background-color: #bebebe;
   }
 
-  .card-title, .card-text, .card-date {
+  .card-title,
+  .card-text,
+  .card-date {
     background-color: #bebebe;
   }
 }
@@ -145,8 +159,9 @@ html, body {
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: bold;
-      a{
-        color:black;
+
+      a {
+        color: black;
         font-weight: 900;
       }
     }
@@ -163,10 +178,11 @@ html, body {
       text-transform: uppercase;
 
       &.active {
-      color: #dba919;
+        color: #dba919;
       }
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         color: #dba919;
       }
     }
@@ -203,6 +219,7 @@ html, body {
 .bg-transparent.menu-close {
   transition: 1s;
 }
+
 // HEADER ENDS
 
 .card-header {
@@ -220,7 +237,8 @@ html, body {
   border-radius: 10px
 }
 
-.code-filename, .image-alt {
+.code-filename,
+.image-alt {
   opacity: 0.6;
   margin-top: 10px;
   font-style: italic;
@@ -231,15 +249,17 @@ html, body {
   margin-bottom: 10px;
   text-align: center;
 
-  &-left{
-    float:left;
-    margin-right:30px;
+  &-left {
+    float: left;
+    margin-right: 30px;
   }
-  &-right{
-    float:right;
-    margin-left:30px;
+
+  &-right {
+    float: right;
+    margin-left: 30px;
   }
 }
+
 .image-alt {
   margin-top: 3px;
 }
@@ -252,6 +272,7 @@ html, body {
     .lead {
       font-size: 17px;
     }
+
     &-title {
       font-size: 52px;
     }
@@ -269,6 +290,7 @@ html, body {
   .card.fj-card {
     background-color: #232129;
     transition: color 0s ease-out 0s, background 0.2s ease-out 0s;
+
     .card-body-wrapper {
       background-color: #232129;
       transition: color 0s ease-out 0s, background 0.2s ease-out 0s;
@@ -304,11 +326,13 @@ html, body {
 
   .react-toggle-track {
     background-color: black;
+
     &:hover {
       background-color: black;
     }
 
-    &-x, &-check {
+    &-x,
+    &-check {
       right: 8px;
       width: 15px;
       height: 15px;

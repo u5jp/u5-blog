@@ -1,69 +1,54 @@
 import { useState } from "react";
 
-import { Row, Col } from "react-bootstrap";
+import { Row, Button } from "react-bootstrap";
 import PageLayout from "components/PageLayout";
 import AuthorIntro from "components/AuthorIntro";
-import CardItem from "components/CardItem";
-import CardListItem from "components/CardListItem";
 import FilteringMenu from "components/FilteringMenu";
 
 import { useGetBlogsPages } from "actions/pagination";
-import { getAllBlogs } from "lib/api";
-import { useGetBlogs } from "actions";
+import { getPaginatedBlogs } from "lib/api";
+// import { useGetBlogs } from "actions";
 
-export default function Home({ blogs: initialData }) {
+export default function Home({ blogs }) {
   const [filter, setFilter] = useState({
     view: { list: 0 },
+    date: { asc: 0 },
   });
 
-  const { data: blogs, error } = useGetBlogs(initialData);
+  //loadMore:to lead more data
+  //isLoadingMore:is true whenever we are making request to fetch data
+  //isReachingEnd: is true when we loaded all of the data, data is empty(empty array)
+
+  // const { data: blogs, error } = useGetBlogs(initialData);
+  const { pages, isLoadingMore, isReachingEnd, loadMore } = useGetBlogsPages({
+    blogs,
+    filter,
+  });
 
   return (
     <PageLayout>
       <AuthorIntro />
       <FilteringMenu
         filter={filter}
-        onChange={(option, value) => {
-          debugger;
-          setFilter({ ...filter, [option]: value });
-        }}
+        onChange={(option, value) => setFilter({ ...filter, [option]: value })}
       />
       <hr />
       {/* {JSON.stringify(blogs)} */}
-      <Row className="mb-5">
-        {blogs.map((blog) =>
-          filter.view.list ? (
-            <Col key={`${blog.slug}-list`} md="9">
-              <CardListItem
-                author={blog.author}
-                title={blog.title}
-                subtitle={blog.subtitle}
-                date={blog.date}
-                slug={blog.slug}
-                link={{
-                  href: "blogs/[slug]",
-                  as: `/blogs/${blog.slug}`,
-                }}
-              />
-            </Col>
-          ) : (
-            <Col key={blog.slug} md="4">
-              <CardItem
-                author={blog.author}
-                title={blog.title}
-                subtitle={blog.subtitle}
-                date={blog.date}
-                image={blog.coverImage}
-                slug={blog.slug}
-                link={{
-                  href: "blogs/[slug]",
-                  as: `/blogs/${blog.slug}`,
-                }}
-              />
-            </Col>
-          )
-        )}
-      </Row>
+      <Row className="mb-5">{pages}</Row>
+      <div style={{ textAlign: "center" }}>
+        <Button
+          onClick={loadMore}
+          disabled={isReachingEnd || isLoadingMore}
+          size="lg"
+          variant="outline-secondary"
+        >
+          {isLoadingMore
+            ? "..."
+            : isReachingEnd
+            ? "no more blog"
+            : "More Blogs"}
+        </Button>
+      </div>
     </PageLayout>
   );
 }
@@ -72,7 +57,7 @@ export default function Home({ blogs: initialData }) {
 // Provides props to your page
 // It will create static page
 export async function getStaticProps() {
-  const blogs = await getAllBlogs({ offset: 0 });
+  const blogs = await getPaginatedBlogs({ offset: 0, date: "desc" });
   return {
     props: {
       blogs,
