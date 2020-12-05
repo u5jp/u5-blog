@@ -1,12 +1,17 @@
 import { Navbar, Nav } from "react-bootstrap";
 import Link from "next/link";
 
-const BlogNavbar = () => {
+const BlogNavbar = ({ theme, toggleTheme }) => {
   return (
-    <Navbar className="fj-navbar fj-nav-base" bg="transparent" expand="lg">
+    <Navbar
+      variant={theme.type}
+      className="fj-navbar fj-nav-base"
+      bg="transparent"
+      expand="lg"
+    >
       <Navbar.Brand className="fj-navbar-brand">
         <Link href="/">
-          <a>u5jp</a>
+          <a style={{ color: theme.fontColor }}>u5jp</a>
         </Link>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -21,6 +26,9 @@ const BlogNavbar = () => {
           >
             Home
           </Nav.Link>
+          <button className="btn btn-success" onClick={toggleTheme}>
+            {theme.type}
+          </button>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
