@@ -2,7 +2,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+1. create`.env.local` file in root folder with values of:
+
+```javascript
+SANITY_DATASET_NAME = YOUR_DATASET_NAME; //from sanity dashboard
+SANITY_PROJECT_ID = YOUR_PROJECT_ID; //from sanity dashboard
+SANITY_PREVIEW_SECRET = YOUR_PREVIEW_SECRET; //unique string
+SANITY_API_TOKEN = YOUR_API_TOKEN; //from sanity dashboard
+```
+
+2. run the development server:
 
 ```bash
 npm run dev
